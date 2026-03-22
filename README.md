@@ -59,9 +59,10 @@ npm install -g @wenyan-md/cli
    - 添加本机公网 IP（访问 [ip.sb](https://ip.sb) 查看）
    - **重要**：未配置白名单会导致 `40164` 错误
 
-3. **配置凭证**
+3. **配置环境变量**
    ```bash
-   wenyan config --appid 你的 AppID --appsecret 你的 AppSecret
+   export WECHAT_APP_ID="你的AppID"
+   export WECHAT_APP_SECRET="你的AppSecret"
    ```
 
 ## 📖 使用指南
@@ -69,79 +70,54 @@ npm install -g @wenyan-md/cli
 ### 快速开始
 
 ```bash
-# 一键发布 Markdown 文章
+# 一键发布 Markdown 文章到公众号草稿箱
 wenyan publish -f article.md
 ```
 
-### 常用命令
+### 内容输入方式
 
-```bash
-# 指定主题样式
-wenyan publish -f article.md --theme blue
+| 方式 | 示例 | 说明 |
+|------|------|------|
+| 本地路径（推荐） | `wenyan publish -f article.md` | CLI 直接读取磁盘上的文章 |
+| URL | `wenyan publish -f http://test.md` | CLI 直接读取网络上的文章 |
+| 参数 | `wenyan publish "# 文章"` | 适用于快速发布短内容 |
+| 管道 | `cat article.md \| wenyan publish` | 适用于 CI/CD，脚本批量发布 |
 
-# 指定作者
-wenyan publish -f article.md --author "作者名"
+### 命令概览
 
-# 指定封面图
-wenyan publish -f article.md --cover ./cover.jpg
+| 命令 | 说明 |
+|------|------|
+| `wenyan publish` | 发布文章 |
+| `wenyan render` | 渲染 HTML |
+| `wenyan theme` | 管理主题 |
+| `wenyan serve` | 启动 Server |
 
-# 开启评论
-wenyan publish -f article.md --enable-comment
+## 📄 Front Matter 格式
 
-# 查看配置
-wenyan config --list
-
-# 查看可用主题
-wenyan config --list-themes
-```
-
-### 内置主题
-
-`default` · `blue` · `green` · `red` · `yellow` · `brown` · `black` · `orange`
-
-### 高级用法：分步执行
-
-```bash
-# Step 1: Markdown 转 HTML
-wenyan md2html --from article.md --to article.html --theme blue
-
-# Step 2: 修复 HTML 并上传图片
-wenyan fix article.html
-
-# Step 3: 生成封面图
-wenyan cover --title "文章标题" --author "作者名" --to cover.jpg
-
-# Step 4: 发布到草稿箱
-wenyan publish --article article.html --cover cover.jpg
-```
-
-## 📄 Front Matter 支持
-
-在 Markdown 文章开头定义元信息：
+每篇 Markdown 顶部需要包含 frontmatter：
 
 ```markdown
 ---
-title: 文章标题
+title: 文章标题（必填）
+cover: /Users/xxx/image.jpg
 author: 作者名
-digest: 文章摘要
-theme: blue
-cover: ./cover.jpg
-enableComment: true
+source_url: http://
 ---
 ```
 
-> 💡 命令行参数优先级高于 Front Matter
+**字段说明：**
+- `title`：文章标题（必填）
+- `cover`：文章封面（本地路径或网络图片，如果正文中已有图片可省略）
+- `author`：文章作者
+- `source_url`：原文地址
 
-## 📁 输出目录结构
+## 📷 文内图片和文章封面
 
-执行后生成 `.wxgzh/` 目录：
+文颜会按照微信要求自动处理文章内的所有图片，将其上传到公众号素材库。支持以下图片格式：
 
-```
-.wxgzh/
-├── article.html          # 转换后的 HTML（已内联样式）
-├── article.cover.jpg     # 自动生成的封面图
-└── publish-result.json   # 发布结果（含草稿 ID）
-```
+- 本地硬盘绝对路径（如：`/Users/xxx/image.jpg`）
+- 网络路径（如：`https://example.com/image.jpg`）
+- 当前文章的相对路径（如：`./assets/image.png`，仅当内容输入方式为"本地路径"时支持）
 
 ## 💡 使用示例
 
@@ -192,7 +168,8 @@ https://python.langchain.com/docs/get_started/introduction
 
 ## 🔗 相关资源
 
-- [wenyan-cli GitHub]()
+- [wenyan-cli 官方文档](https://www.npmjs.com/package/@wenyan-md/cli)
+- [配置说明文档](https://yuzhi.tech/docs/wenyan/upload)
 - [微信公众号开发文档](https://developers.weixin.qq.com/doc/offiaccount/Getting_Started/Overview.html)
 
 ## 📝 License
