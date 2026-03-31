@@ -66,9 +66,10 @@ graph TD
 ```markdown
 ---
 title: 文章标题（不超过65个字，不用特殊字符）
-cover: asset/微信公众号头像.png
+cover: {skill_dir}/asset/微信公众号头像.png
 ---
 ```
+cover是封面图片路径，如果没有指定封面图片路径，则使用默认插图路径：`{skill_dir}/asset/微信公众号头像.png`
 
 ### 3. 质量审核（关键环节）
 
@@ -176,20 +177,27 @@ cover: asset/微信公众号头像.png
 - 将完成的文章保存为 Markdown (`.md`) 格式文件
 - 确保 Markdown 语法正确，可直接用于发布
 - 文件命名规范：使用文章标题+日期作为文件名
+- 文件保存路径：`{skill_dir}/articles/文章名字.md`
+
+> **免责声明**：本文由人类口述意图、AI 生成文本、人类审阅纠偏完成。文中观点代表作者个人经验，AI 生成内容已经过人工审阅，但仍可能存在表述不当之处。欢迎讨论，求轻喷 🙏
 
 ### 5. 发布文章
 
-使用 wenyan-cli 工具将 Markdown 文章发布到微信公众号草稿箱：
+使用 wenyan 工具将 Markdown 文章发布到微信公众号草稿箱：
 
 ```bash
-wenyan publish -f 文章名字.md
+wenyan publish -f {skill_dir}/articles/文章名字.md
 ```
 
-#### wenyan-cli 工具说明
+#### wenyan 工具说明
 
 **安装方式：**
 
 ```bash
+# 验证是否已经安装，避免重复安装
+wenyan --version
+
+# 使用 npm 全局安装
 npm install -g @wenyan-md/cli
 ```
 
@@ -248,7 +256,6 @@ https://python.langchain.com/docs/get_started/introduction
 
 ### 发布执行阶段
 
-7. **发布前检查**：执行 `publish` 命令前确认 wenyan-cli 已正确配置，文件路径正确
-8. **封面图片**：默认使用 `asset/微信公众号头像.png`，请确保该路径存在或使用自定义封面
+7. **发布前检查**：执行 `publish` 命令前确认 wenyan 已正确配置，文件路径正确
+8. **封面图片**：默认使用 `{skill_dir}/asset/微信公众号头像.png`，请确保该路径存在或使用自定义封面
 9. **IP白名单**：发布前务必在公众号后台配置本机IP白名单，避免 `40164` 错误
-

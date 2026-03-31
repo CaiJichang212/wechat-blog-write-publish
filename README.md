@@ -37,11 +37,11 @@ graph LR
 - 适度使用表情符号增强可读性
 
 ### 4️⃣ 发布文章
-使用 `wenyan-cli` 工具一键发布到微信公众号草稿箱
+使用 `wenyan` 工具一键发布到微信公众号草稿箱
 
 ## 🛠️ 安装与配置
 
-### 安装 wenyan-cli
+### 安装 wenyan
 
 ```bash
 npm install -g @wenyan-md/cli
@@ -99,17 +99,14 @@ wenyan publish -f article.md
 ```markdown
 ---
 title: 文章标题（必填）
-cover: /Users/xxx/image.jpg
-author: 作者名
-source_url: http://
+cover: xxx/image.jpg
 ---
 ```
 
 **字段说明：**
 - `title`：文章标题（必填）
 - `cover`：文章封面（本地路径或网络图片，如果正文中已有图片可省略）
-- `author`：文章作者
-- `source_url`：原文地址
+
 
 ## 📷 文内图片和文章封面
 
@@ -117,7 +114,7 @@ source_url: http://
 
 - 本地硬盘绝对路径（如：`/Users/xxx/image.jpg`）
 - 网络路径（如：`https://example.com/image.jpg`）
-- 当前文章的相对路径（如：`./assets/image.png`，仅当内容输入方式为"本地路径"时支持）
+- 当前文章的相对路径（如：`./asset/image.png`，仅当内容输入方式为"本地路径"时支持）
 
 ## 💡 使用示例
 
@@ -135,20 +132,6 @@ https://python.langchain.com/docs/get_started/introduction
 3. 保存为 `langchain-intro.md`
 4. 执行 `wenyan publish -f langchain-intro.md` 发布
 
-### 示例 2：基于多个参考资料
-
-**输入：**
-```
-请根据以下资料写一篇 AI 产品经理的文章：
-- 文档：/path/to/product-methods.pdf
-- 链接：https://example.com/ai-pm-guide
-```
-
-**执行流程：**
-1. 读取 PDF 文档和网页内容
-2. 整合信息，创作结构化文章
-3. 保存为 `ai-product-manager.md`
-4. 执行 `wenyan publish -f ai-product-manager.md` 发布
 
 ## ⚠️ 常见问题
 
@@ -162,13 +145,13 @@ https://python.langchain.com/docs/get_started/introduction
 
 1. **内容准确性**：严格基于参考资料，不臆造信息
 2. **格式规范**：确保 Markdown 语法正确，标题层级清晰
-3. **发布前检查**：确认 wenyan-cli 已正确配置
+3. **发布前检查**：确认 wenyan 已正确配置
 4. **封面图片**：默认使用 `asset/微信公众号头像.png`，可自定义
 5. **IP 白名单**：发布前务必在公众号后台配置本机 IP
 
 ## 🔗 相关资源
 
-- [wenyan-cli 官方文档](https://www.npmjs.com/package/@wenyan-md/cli)
+- [wenyan 官方文档](https://www.npmjs.com/package/@wenyan-md/cli)
 - [配置说明文档](https://yuzhi.tech/docs/wenyan/upload)
 - [微信公众号开发文档](https://developers.weixin.qq.com/doc/offiaccount/Getting_Started/Overview.html)
 
